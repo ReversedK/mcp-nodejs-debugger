@@ -72,11 +72,13 @@ class Inspector {
 			
 			this.ws.on('error', (error) => {
 				this.scheduleRetry();
+				 this.debuggerEnabled = false;
 			});
 			
 			this.ws.on('close', () => {
 				this.connected = false;
 				this.scheduleRetry();
+				this.debuggerEnabled = false;
 			});
 			
 			this.ws.on('message', (data) => {
@@ -1139,6 +1141,7 @@ server.tool(
       if (inspector.connected && inspector.ws) {
         inspector.ws.close();
         inspector.connected = false;
+		inspector.debuggerEnabled = false;
       }
       
       // Reset retry count and initialize
